@@ -1,16 +1,18 @@
 <template>
   <div class="home">
-    Home {{ $t('hello') }}
+    <MainSection />
+    <HeroesEntriesSection />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-
-
+import MainSection from '@/components/main-game/MainSection.vue';
+import HeroesEntriesSection from '@/components/main-game/HeroesEntriesSection.vue';
 export default {
   name: 'HomeView',
   components: {
+    MainSection,
+    HeroesEntriesSection
   }
 }
 </script>

@@ -1,6 +1,8 @@
 <template>
-  <div class="foooter-section">
-    Footer Section
+  <div class="footer-section">
+    <div class="container align-center">
+      (c) 2022 copyright by YourCompany
+    </div>
   </div>
 </template>
 
@@ -8,7 +10,7 @@
 export default {
   data(){
     return {
-      
+
     }
   }
 }
