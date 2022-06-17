@@ -8,7 +8,8 @@ const getDefaultState = () => {
     refresh_token: getRefreshToken(),
     wallet: '',
     user: {},
-    heroes_mint: []
+    heroes_mint: [],
+    heroes_data: []
   }
 }
 
@@ -59,6 +60,10 @@ const mutations = {
 
   SET_HEROES_MINT: (state, list) => {
     state.heroes_mint = list;
+  },
+
+  SET_HEROES_DATA: (state, list) => {
+    state.heroes_data = list;
   }
 }
 
@@ -111,10 +116,12 @@ const actions = {
         const { data } = response
         let user = data.user;
         let heroes = data.heroes;
+        let heroes_data = data.heroes_data;
 
         commit('SET_WALLET', user.wallet);
         commit('SET_USER', user);
         commit('SET_HEROES_MINT', heroes);
+        commit('SET_HEROES_DATA', heroes_data);
         resolve(data);
       }).catch(error => {
         reject(error)
@@ -146,6 +153,16 @@ const actions = {
       resolve()
     })
   },
+
+  toggleSelectHero({ commit }, data) {
+    return new Promise((resolve, reject) => {
+      Users.toggleSelectHero(data).then(() => {
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
 
 export default {

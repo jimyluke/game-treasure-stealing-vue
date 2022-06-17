@@ -30,6 +30,14 @@ class UserApi {
       method: 'post'
     })
   }
+
+  toggleSelectHero(data) {
+    return request({
+      url: '/user/update-hero-status',
+      method: 'post',
+      data
+    })
+  }
 }
 
 const User = new UserApi()

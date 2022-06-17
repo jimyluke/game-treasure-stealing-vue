@@ -13,35 +13,7 @@
             </ul>
             <ul v-else>
               <li v-for="hero in heroes" :key="hero.mint" @click="toggleSelectHero(hero)">
-                <el-popover
-                  placement="right"
-                  :title="hero.data.name"
-                  width="260"
-                  trigger="hover"
-                  :open-delay="500">
-                  <div class="hero-expanded-stats">
-                    <el-row v-for="(val, key) in hero.data.customMetaData.attributes" :key="key">
-                      <label class="hero-attribute">{{key}}</label><span>{{val}}</span>
-                    </el-row>
-                    <!-- {{hero.data.customMetaData}} -->
-                  </div>
-                  <div slot="reference">
-                    <label>{{ hero.data.name }}</label>
-                    <div class="hero-img">
-                      <el-checkbox v-model="option"></el-checkbox>
-                      <img :src="hero.data.customMetaData.image" />
-                    </div>
-                    <div class="block">
-                      <span>Hero Tier: <strong> 
-                        <span v-if="hero.data && hero.data.customMetaData.attributes">{{ hero.data.customMetaData.attributes.heroTier }}</span>
-                        <span v-else>None</span></strong>
-                      </span>
-                    </div>
-                    <div class="block">
-                      <span>Thieving Skill:</span> <span class="good">Good</span>
-                    </div>
-                  </div>
-                </el-popover>
+                <HeroItem :hero="hero" />
               </li>
             </ul>
           </div>
@@ -62,7 +34,7 @@
               <label class="label-x">Non-NFT Entries:</label> <el-input-number v-model="num" controls-position="right" size="small"></el-input-number>
             </div>
             <div class="sm-row">
-              <label class="label-x">Supercharge Entries:</label> <el-checkbox v-model="option"></el-checkbox> -50 Loot
+              <label class="label-x">Supercharge Entries:</label> <el-checkbox v-model="supercharge_entries"></el-checkbox> -50 Loot
             </div>
             <div class="sm-row last">
               <label class="label-x">Total Entries:</label> 7 <br />
@@ -76,17 +48,20 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import HeroPlaceHolder from './HeroPlaceHolder.vue';
+import HeroItem from './HeroItem.vue';
 
 export default {
   data:() => ({
-    option: true,
-    num: ''
+    heroesActive: {},
+    num: '',
+    supercharge_entries: false
   }),
 
   components: {
-    HeroPlaceHolder
+    HeroPlaceHolder,
+    HeroItem
   },
 
   computed: {
@@ -100,8 +75,12 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      toggleSelectHeroAction: 'users/toggleSelectHero'
+    }),
     toggleSelectHero(hero){
       console.log(hero)
+      this.toggleSelectHeroAction({hero_mint: hero.mint})
     }
   }
 }
