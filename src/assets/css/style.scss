@@ -73,9 +73,9 @@ span.loot-loose{
 
 .router-view{
   clear: both;
-  padding-bottom: 0px;
   width: 100%;
-  overflow: hidden;;
+  overflow: hidden;
+  padding: 20px 0;
 }
 
 .vs-icon-check span .line1{
@@ -129,6 +129,21 @@ span.loot-loose{
   background-color: #000;
   padding: 40px 20px;
   clear: both;
+
+  .enter-action{
+    text-align: center;
+
+    .enter-button{
+      border: 2px solid #cfff73;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 20px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #cfff73;
+      font-weight: bold;
+    }
+  }
 }
 
 .main-game-heroes-entries{
@@ -164,6 +179,7 @@ span.loot-loose{
       background-color: #382118;
       padding: 15px;
       border-radius: 5px;
+      cursor: pointer;
 
       label{
         display: block;
@@ -183,8 +199,8 @@ span.loot-loose{
 
       .el-checkbox{
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 5px;
+        right: 7px;
       }
 
       .heoro-item-footer{
@@ -193,6 +209,14 @@ span.loot-loose{
         margin-top: 5px;
       }
     }
+  }
+
+  .el-skeleton.is-animated .el-skeleton__item{
+    background: linear-gradient(90deg,#24130d 25%,#382118 37%,#2c1911 63%);
+  }
+
+  .el-loading-mask{
+    background-color: rgba(36, 19, 13, 0.34);
   }
 }
 
@@ -244,4 +268,9 @@ body .el-popper[x-placement^=bottom] .popper__arrow{
 
 body .el-popper[x-placement^=bottom] .popper__arrow::after{
   border-bottom-color: #7c5749;
+}
+
+label.hero-attribute{
+  display: inline-block;
+  width: 120px;
 }

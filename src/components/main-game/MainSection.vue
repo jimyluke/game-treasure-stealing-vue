@@ -34,6 +34,7 @@
         <div class="align-center">
           <img src="@/assets/images/monster.png" />
         </div>
+        <div class="enter-action"><a class="enter-button" href="javascript:void(0)">Enter</a></div>
       </div>
     </div>
   </div>

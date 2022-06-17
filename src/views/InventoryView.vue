@@ -1,7 +1,7 @@
 <template>
-  <div class="about">
+  <div class="inventory-layout">
     <div class="container">
-      <h1>This is an about page</h1>
+      <h1>This is an inventory page</h1>
     </div>
   </div>
 </template>
