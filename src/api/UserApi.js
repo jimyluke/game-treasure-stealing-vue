@@ -38,6 +38,14 @@ class UserApi {
       data
     })
   }
+
+  enterGame(data){
+    return request({
+      url: '/user/enter-game',
+      method: 'post',
+      data
+    })
+  }
 }
 
 const User = new UserApi()

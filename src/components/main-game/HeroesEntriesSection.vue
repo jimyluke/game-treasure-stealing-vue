@@ -12,7 +12,7 @@
               </li>
             </ul>
             <ul v-else>
-              <li v-for="hero in heroes" :key="hero.mint" @click="toggleSelectHero(hero)">
+              <li v-for="hero in heroes" :key="hero.mint">
                 <HeroItem :hero="hero" />
               </li>
             </ul>
@@ -23,7 +23,7 @@
           <h3>Entries</h3>
           <div class="entries-section-inner">
             <div class="status-n-action">
-              <span>Hero's Commited: 5/5</span>
+              <span>Hero's Commited: {{ heroCommitedLabel }}</span>
               <el-button type="text">Select All</el-button>
             </div>
             <div class="sm-row">
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import HeroPlaceHolder from './HeroPlaceHolder.vue';
 import HeroItem from './HeroItem.vue';
 
@@ -67,21 +67,26 @@ export default {
   computed: {
     ...mapState({
       loading: state => state.nfts_loading,
-      nfts: state => state.nfts
+      nfts: state => state.nfts,
+      heroes_data: state => state.users.heroes_data
     }),
+
     ...mapGetters({
-      heroes: 'users/heroes'
-    })
+      heroes: 'users/heroes',
+      heroCommitedTotal: 'users/heroCommitedTotal',
+    }),
+
+    heroTotal(){
+      return this.heroes_data.length;
+    },
+
+    heroCommitedLabel(){
+      return `${this.heroCommitedTotal}/${this.heroTotal}`;
+    }
   },
 
   methods: {
-    ...mapActions({
-      toggleSelectHeroAction: 'users/toggleSelectHero'
-    }),
-    toggleSelectHero(hero){
-      console.log(hero)
-      this.toggleSelectHeroAction({hero_mint: hero.mint})
-    }
+    
   }
 }
 </script>

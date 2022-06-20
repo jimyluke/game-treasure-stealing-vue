@@ -34,8 +34,36 @@
         <div class="align-center">
           <img src="@/assets/images/monster.png" />
         </div>
-        <div class="enter-action"><a class="enter-button" href="javascript:void(0)">Enter</a></div>
+        <div class="enter-action"><a class="enter-button" href="javascript:void(0)" @click="enterGameToday">
+          <i class="el-icon-loading" v-if="loading" style="margin-right: 5px;"></i>Enter</a></div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+export default {
+  data(){
+    return {
+      loading: false
+    }
+  },
+
+  methods: {
+    ...mapActions({
+      enterGame: 'users/enterGame'
+    }),
+
+    enterGameToday(){
+      if(this.loading)
+        return false;
+
+      this.loading = true;
+      this.enterGame().then( () => {
+        this.loading = false;
+      });
+    }
+  }
+}
+</script>

@@ -26,6 +26,13 @@ const getters = {
 
   isLoggedIn(state){
     return state.token? true: false;
+  },
+
+  heroCommitedTotal(state){
+    let findHero = _.filter(state.heroes_data, hero => {
+      return hero.active === 1;
+    })
+    return findHero.length;
   }
 }
 
@@ -154,14 +161,35 @@ const actions = {
     })
   },
 
-  toggleSelectHero({ commit }, data) {
+  toggleSelectHero({ state, commit }, data) {
     return new Promise((resolve, reject) => {
-      Users.toggleSelectHero(data).then(() => {
-        resolve()
+      Users.toggleSelectHero(data).then( res => {
+        console.log(res)
+        let update_heroes_data = [];
+        state.heroes_data.forEach( h => {
+          let _h = h;
+          if(_h.mint === res.update.mint){
+            _h.active = res.update.active;
+          }
+          update_heroes_data.push(_h);
+        });
+        commit('SET_HEROES_DATA', update_heroes_data);
+        resolve(res)
       }).catch(error => {
         reject(error)
       })
     })
+  },
+
+  enterGame({commit}){
+    return new Promise((resolve, reject) => {
+      Users.enterGame({}).then( res => {
+        resolve(res)
+      }).catch( error => {
+        console.log(error)
+        reject(error)
+      })
+    });
   }
 }
 

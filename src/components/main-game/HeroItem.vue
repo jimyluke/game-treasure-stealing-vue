@@ -14,8 +14,8 @@
     <div slot="reference">
       <label>{{ hero.data.name }}</label>
       <div class="hero-img">
-        <el-checkbox v-model="heroStatus"></el-checkbox>
-        <img :src="hero.data.customMetaData.image" />
+        <el-checkbox v-model="heroStatus" :checked="isChecked" @change="toggleSelectHero"></el-checkbox>
+        <img v-lazy="hero.data.customMetaData.image" />
       </div>
       <div class="block">
         <span>Hero Tier: <strong> 
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
   data(){
     return {
@@ -46,11 +47,28 @@ export default {
   },
 
   computed: {
-    
+    ...mapState({
+      heroes_data: state => state.users.heroes_data
+    }),
+
+    isChecked(){
+      let self = this;
+      const find = _.filter(this.heroes_data, h => {
+        return h.mint === self.hero.mint && h.active === 1;
+      })
+      return find.length > 0? true: false;
+    }
   },
 
   methods: {
+    ...mapActions({
+      toggleSelectHeroAction: 'users/toggleSelectHero'
+    }),
 
+    toggleSelectHero(){
+      const hero = this.hero;
+      this.toggleSelectHeroAction({hero_mint: hero.mint})
+    }
   }
 }
 </script>

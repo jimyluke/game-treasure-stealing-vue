@@ -6,6 +6,9 @@ import getters from './getters'
 
 Vue.use(Vuex);
 
+const io = require("socket.io-client");
+const socket = io(process.env.VUE_APP_SOCKET_URL+'/gts.dashboard', {});
+
 const store = new Vuex.Store({
   modules: {
     users: users
@@ -15,6 +18,7 @@ const store = new Vuex.Store({
     nfts_loading: false,
     nfts: [],
     SolTotal: 0,
+    socket: socket
   },
   getters,
 
