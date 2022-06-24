@@ -8,7 +8,7 @@
 
       <div class="user-coin-info right-side" v-if="isLoggedIn">
         <span>{{ totalSol }} SOL ($5)</span>
-        <span>504 thief coin</span>
+        <span>{{ totalLoot }} Loot</span>
 
         <el-popover
           placement="bottom"
@@ -61,6 +61,10 @@ export default {
 
     totalSol(){
       return this.user.sol_balance;
+    },
+
+    totalLoot(){
+      return this.user.total_loot;
     }
   },
 

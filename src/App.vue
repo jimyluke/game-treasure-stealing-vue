@@ -7,11 +7,25 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import Header from '@/components/SiteHeader.vue';
 import Footer from '@/components/SiteFooter.vue';
 import "@/assets/css/_variables.scss";
 import "@/assets/css/style.scss";
 import { mapState } from 'vuex';
+
+Vue.filter('currency', function (value) {
+  if (typeof value !== "number") {
+    return value;
+  }
+  var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+  });
+
+  return formatter.format(value);
+});
+
 export default {
   components: {
     Header,

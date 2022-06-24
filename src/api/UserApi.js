@@ -39,6 +39,14 @@ class UserApi {
     })
   }
 
+  updateNonNFTEntries(data){
+    return request({
+      url: '/user/update-non-nft-entries',
+      method: 'post',
+      data
+    })
+  }
+
   enterGame(data){
     return request({
       url: '/user/enter-game',

@@ -8,8 +8,10 @@ const getDefaultState = () => {
     refresh_token: getRefreshToken(),
     wallet: '',
     user: {},
+    non_nft_entries: 0,
     heroes_mint: [],
-    heroes_data: []
+    heroes_data: [],
+    curent_game_info: {}
   }
 }
 
@@ -71,6 +73,14 @@ const mutations = {
 
   SET_HEROES_DATA: (state, list) => {
     state.heroes_data = list;
+  },
+
+  SET_NON_NFT_ENTRIES: (state, amount) => {
+    state.non_nft_entries = amount;
+  },
+
+  SET_CURENT_GAME_INFO: (sate, info) => {
+    state.curent_game_info = info;
   }
 }
 
@@ -129,6 +139,8 @@ const actions = {
         commit('SET_USER', user);
         commit('SET_HEROES_MINT', heroes);
         commit('SET_HEROES_DATA', heroes_data);
+        commit('SET_NON_NFT_ENTRIES', data.non_nft_entries);
+        commit('SET_CURENT_GAME_INFO', data.current_entries);
         resolve(data);
       }).catch(error => {
         reject(error)
@@ -164,7 +176,7 @@ const actions = {
   toggleSelectHero({ state, commit }, data) {
     return new Promise((resolve, reject) => {
       Users.toggleSelectHero(data).then( res => {
-        console.log(res)
+        //console.log(res)
         let update_heroes_data = [];
         state.heroes_data.forEach( h => {
           let _h = h;
@@ -174,11 +186,25 @@ const actions = {
           update_heroes_data.push(_h);
         });
         commit('SET_HEROES_DATA', update_heroes_data);
+        commit('SET_CURENT_GAME_INFO', res.game_info);
+
         resolve(res)
       }).catch(error => {
         reject(error)
       })
     })
+  },
+
+  updateNonNFTEntries({commit}, entries_total){
+    return new Promise((resolve, reject) => {
+      Users.updateNonNFTEntries({entries: entries_total}).then( res => {
+        commit('SET_CURENT_GAME_INFO', res.game_info);
+        resolve(res)
+      }).catch( error => {
+        console.log(error)
+        reject(error)
+      })
+    });
   },
 
   enterGame({commit}){
