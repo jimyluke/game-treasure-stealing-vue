@@ -12,7 +12,7 @@
       <!-- {{hero.data.customMetaData}} -->
     </div>
     <div slot="reference">
-      <label>{{ hero.data.name }}</label>
+      <label class="hero-name">{{ hero.data.name }}</label>
       <div class="hero-img">
         <el-checkbox v-model="heroStatus" :checked="isChecked" @change="toggleSelectHero"></el-checkbox>
         <img v-lazy="hero.data.customMetaData.image" />

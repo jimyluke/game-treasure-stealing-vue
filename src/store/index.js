@@ -15,10 +15,13 @@ const store = new Vuex.Store({
   },
   state: {
     version: '1.0.1',
+    sidebar: false,
+    device: '',
     nfts_loading: false,
     nfts: [],
     SolTotal: 0,
-    socket: socket
+    socket: socket,
+    game_info: {}
   },
   getters,
 
@@ -33,10 +36,26 @@ const store = new Vuex.Store({
 
     SET_SOL_TOTAL: (state, total) => {
       state.SolTotal = total;
+    },
+
+    SET_GAME_INFO: (state, info) => {
+      state.game_info = info;
     }
   },
 
   actions: {
+    get_game_info({commit}){
+      return new Promise((resolve, reject) => {
+        App.getGameInfo().then( res => {
+          commit('SET_GAME_INFO', res.game_info);
+          resolve(res)
+        }).catch( error => {
+          console.log(error)
+          reject(error)
+        })
+      });
+    },
+
     get_nfts({commit}){
       commit('SET_NFTS_LOADING', true);
       return new Promise((resolve, reject) => {

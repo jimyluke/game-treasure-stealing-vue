@@ -1,5 +1,12 @@
 import request from '@/utilities/request';
 class AppRequestAPI {
+  getGameInfo(){
+    return request({
+      url: `/game/info`,
+      method: 'get'
+    })
+  }
+
   getNSTF(){
     return request({
       url: `https://cryptoquestnft.com/api/nfts/all`,

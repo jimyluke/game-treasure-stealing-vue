@@ -13,6 +13,10 @@ export default {
   components: {
     MainSection,
     HeroesEntriesSection
-  }
+  },
+
+  mounted() {
+    this.$store.dispatch('get_game_info');
+  },
 }
 </script>

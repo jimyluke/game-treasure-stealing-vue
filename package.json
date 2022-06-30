@@ -13,6 +13,8 @@
     "core-js": "^3.8.3",
     "element-ui": "^2.15.9",
     "js-cookie": "^3.0.1",
+    "moment": "^2.29.3",
+    "moment-timezone": "^0.5.34",
     "nprogress": "^0.2.0",
     "socket.io-client": "^4.5.1",
     "vue": "^2.6.14",

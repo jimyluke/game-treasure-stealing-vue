@@ -76,6 +76,9 @@ h1,h2,h3,h4,h5,h6{
 .money{
   color: #a0d761;
 }
+.money.w-plus{
+  color: #dab136;
+}
 
 span.loot-loose{
   color: #dab136;
@@ -95,7 +98,7 @@ span.loot-loose{
   clear: both;
   width: 100%;
   overflow: hidden;
-  padding: 20px 0;
+  padding: 0 0;
 }
 
 .vs-icon-check span .line1{
@@ -109,9 +112,13 @@ span.loot-loose{
   margin-bottom: 15px;
 }
 
+.sm-row label{
+  vertical-align: top;
+}
+
 .header-section{
   background-color: #24130d;
-  padding: 20px 0;
+  padding: 15px 0;
 
   .container{
     display: flex;
@@ -179,11 +186,11 @@ span.loot-loose{
     }
 
     .heroes-list{
-      width: calc(60% - 15px);
+      width: calc(65% - 15px);
     }
   
     .entries-section{
-      width: calc(40% - 15px);
+      width: calc(35% - 15px);
     }
   }
 }
@@ -200,12 +207,17 @@ span.loot-loose{
       padding: 15px;
       border-radius: 5px;
 
-      label{
+      label.hero-name{
         display: block;
         text-align: center;
         text-transform: uppercase;
         margin-bottom: 10px;
         font-weight: 600;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        font-size: 14px;
       }
       
       img{
@@ -237,6 +249,66 @@ span.loot-loose{
   .el-loading-mask{
     background-color: rgba(36, 19, 13, 0.34);
   }
+}
+
+.monster-section{
+  .thieves-guide{
+    font-weight: bold;
+  }
+
+  .thieves-guide-standing > span{
+    color: #a0d761;
+  }
+
+  .info-boxed{
+    width: 600px;
+    margin: 0 auto;
+
+    .el-col > span{
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+
+  .chest-icon{
+    background-image: url('../images/chest01.png');
+    width: 100%;
+    height: 80px;
+    display: block;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 75px;
+  }
+
+  span.spb-03{
+    background-color: #999;
+    color: #000;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  a{
+    text-decoration: none;
+    color: #adadad;
+    font-weight: bold;
+  }
+
+  span.sp-timer, span.sp-live{
+    font-size: 22px;
+  }
+
+  span.sp-timer{
+    color: #b68dff;
+  }
+
+  span.sp-live{
+    color: #FF0000;
+  }
+}
+
+.monster-section-info{
+  display: flex;
 }
 
 .entries-section-inner{

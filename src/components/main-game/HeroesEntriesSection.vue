@@ -3,17 +3,22 @@
     <div class="container">
       <div class="section-wrapper">
         <div class="heroes-list col-left">
-          <h3>Heroes</h3>
+          <h3>Heroes ({{heroes.length}})</h3>
 
           <div class="heroes-list-inner">
             <ul v-if="loading">
-              <li v-for="i in 6" :key="i">
-                <HeroPlaceHolder />
+              <li v-for="i in 3" :key="i">
+                <HeroPlaceHolder :is-loading="true" />
               </li>
             </ul>
             <ul v-else>
               <li v-for="hero in heroes" :key="hero.mint">
                 <HeroItem :hero="hero" />
+              </li>
+            </ul>
+            <ul v-if="!loading && heroes.length == 0">
+              <li v-for="i in 3" :key="i">
+                <HeroPlaceHolder />
               </li>
             </ul>
           </div>
@@ -43,7 +48,7 @@
               </el-input-number>
             </div>
             <div class="sm-row">
-              <label class="label-x">Supercharge Entries:</label> <el-checkbox v-model="supercharge_entries"></el-checkbox> -50 Loot
+              <label class="label-x">Loot boost? Enchanted Entries?:</label> <el-checkbox v-model="loot_boost">-50 Loot</el-checkbox>
             </div>
             <div class="sm-row last">
               <label class="label-x">Total Entries:</label> {{ curent_game_info.entry_total }} <br />
@@ -65,7 +70,7 @@ export default {
   data:() => ({
     heroesActive: {},
     non_nft_entries_input: '',
-    supercharge_entries: false
+    loot_boost: false
   }),
 
   components: {
@@ -97,10 +102,14 @@ export default {
     },
 
     costPerHeroOrigin(){
+      if(this.heroCount === 0)
+        return 0;
       return this.curent_game_info.entry_total / this.heroCount;
     },
 
     costPerHero(){
+      if(this.heroCount === 0)
+        return 0;
       return this.curent_game_info.TotalSpent / this.heroCount;
     },
 
