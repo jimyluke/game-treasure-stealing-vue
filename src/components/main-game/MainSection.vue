@@ -7,18 +7,28 @@
             <span class="block sh2"></span>
           </el-col>
           <el-col :span="8" class="align-center">
-            <span class="block sh2">Bonenosher's Bounty</span>
-            <span class="block sh2 money">{{ bonenosherBountyTotal | currency }} <i class="el-icon-info"></i></span>
-            <span class="block sh3 money w-plus">{{ bonenosherBountyLoose | currency }} <i class="el-icon-info"></i></span>
+            <span class="block sh2 bb-label">Bonenosher's Bounty</span>
+            <span class="block sh2 money-2">{{ bonenosherBountyTotal | currency }} 
+              <el-tooltip effect="dark" content="Main Pot" placement="bottom">
+                <i class="el-icon-info"></i>
+              </el-tooltip>
+            </span>
+            <span class="block sh3 bb-bonus w-plus">{{ bonenosherBountyLoose | currency }}
+              <el-tooltip effect="dark" content="Daily Bonus" placement="bottom">
+                <i class="el-icon-info"></i>
+              </el-tooltip>
+            </span>
           </el-col>
           <el-col class="align-right thieves-guide" :span="8">
-            <span class="block">Thieves Guide Standing</span>
+            <span class="block">Thieves Guild Standing</span>
             <span class="block thieves-guide-standing"><span>{{ thievesGuideStandingActive }}</span>/{{ thievesGuideStandingTotal }}</span>
           </el-col>
         </el-row>
 
         <div class="align-center">
-          <img src="@/assets/images/monster.png" />
+          <div class="bonensoher">
+            <img src="@/assets/images/bonensoher.png" />
+          </div>
         </div>
 
         <div class="enter-action">
@@ -26,7 +36,7 @@
             <el-row class="IB-x834" :gutter="20">
               <el-col :span="8">
                 <span class="sp-timer">{{countDown}}</span>
-                <span class="spb-03">QUEUE</span>
+                <span class="spb-03"><a href="javascript:void(0)" @click="enterGameToday">QUEUE</a></span>
                 <span>Queued Thieves: {{ queuedThieves }}</span>
               </el-col>
               <el-col :span="8">
@@ -37,7 +47,7 @@
               </el-col>
               <el-col :span="8">
                 <span class="sp-live">LIVE</span>
-                <span class="spb-03">WATCH</span>
+                <span class="spb-03"><a href="javascript:void(0)" @click="watchResult">WATCH</a></span>
                 <span>Active Thieves: {{ activeThieves }}</span>
               </el-col>
             </el-row>
@@ -70,19 +80,19 @@ export default {
     }),
 
     bonenosherBountyTotal(){
-      return this.game_info.bonenosher_bounty.total;
+      return this.game_info.bonenosher_bounty?.total || 0;
     },
 
     bonenosherBountyLoose(){
-      return this.game_info.bonenosher_bounty.loose;
+      return this.game_info.bonenosher_bounty?.loose || 0;
     },
     
     thievesGuideStandingActive(){
-      return this.game_info.thieves_guide_standing.active;
+      return this.game_info.thieves_guide_standing?.active || 0;
     },
 
     thievesGuideStandingTotal(){
-      return this.game_info.thieves_guide_standing.total;
+      return this.game_info.thieves_guide_standing?.total || 0;
     },
 
     queuedThieves(){
@@ -101,7 +111,7 @@ export default {
 
       return [hours,minutes,seconds]
           .map(v => v < 10 ? "0" + v : v)
-          .filter((v,i) => v !== "00" || i > 0)
+          .filter((v,i) => v !== "00" || i >= 0)
           .join(":")
     }
   },
@@ -113,6 +123,9 @@ export default {
       var end = moment(new Date(_this.game_info.wake_time)); // another date
       var duration = moment.duration(end.diff(now));
       _this.time_in_seconds = duration.asSeconds();
+      if(_this.time_in_seconds < 0){
+        _this.$store.dispatch('get_game_info');
+      }
     }, 1000);
   },
 
@@ -133,6 +146,10 @@ export default {
 
     openChest(){
       console.log('Open Chest')
+    },
+
+    watchResult(){
+
     }
   }
 }

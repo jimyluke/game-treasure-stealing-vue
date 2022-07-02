@@ -1,15 +1,16 @@
 <template>
   <el-popover
-    placement="right"
+    placement="bottom"
     :title="hero.data.name"
     width="260"
     trigger="hover"
-    :open-delay="500">
+    :open-delay="300">
     <div class="hero-expanded-stats">
-      <el-row v-for="(val, key) in hero.data.customMetaData.attributes" :key="key">
+      <!-- <el-row v-for="(val, key) in hero.data.customMetaData.attributes" :key="key">
         <label class="hero-attribute">{{key}}</label><span>{{val}}</span>
-      </el-row>
+      </el-row> -->
       <!-- {{hero.data.customMetaData}} -->
+      Hero Infomation
     </div>
     <div slot="reference">
       <label class="hero-name">{{ hero.data.name }}</label>
