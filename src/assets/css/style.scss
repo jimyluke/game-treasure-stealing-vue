@@ -418,3 +418,11 @@ button.queue-thieves-button{
   background-color: #653b2a;
   border-color: #945e49;
 }
+
+button.el-button--primary.is-disabled, 
+button.el-button--primary.is-disabled:active, 
+button.el-button--primary.is-disabled:focus, 
+button.el-button--primary.is-disabled:hover{
+  background-color: #595959;
+  border-color: #595959;
+}

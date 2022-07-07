@@ -36,7 +36,7 @@
             <el-row class="IB-x834" :gutter="20">
               <el-col :span="8">
                 <span class="sp-timer">{{countDown}}</span>
-                <span class="spb-03"><a href="javascript:void(0)" @click="openQueue">QUEUE</a></span>
+                <span class="spb-03"><a href="javascript:void(0)" @click="openQueue">{{ game_id>0? 'QUEUED': 'QUEUE' }}</a></span>
                 <span>Queued Thieves: {{ queuedThieves }}</span>
               </el-col>
               <el-col :span="8">
@@ -76,6 +76,7 @@ export default {
 
   computed: {
     ...mapState({
+      game_id: state => state.users.game_id,
       game_info: state => state.game_info
     }),
 

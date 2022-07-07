@@ -56,7 +56,12 @@
             </div>
 
             <div class="sm-row last">
-              <el-button class="queue-thieves-button" type="primary" :loading="entering">Queue Thieves</el-button>
+              <el-button 
+                class="queue-thieves-button" 
+                type="primary" 
+                :loading="entering" 
+                @click="enterGameToday"
+                :disabled="isDisabled">Queue Thieves</el-button>
             </div>
           </div>
         </div>
@@ -86,6 +91,7 @@ export default {
   computed: {
     ...mapState({
       queued: state => state.users.queued,
+      game_playing_id: state => state.users.game_playing_id,
       loading: state => state.nfts_loading,
       nfts: state => state.nfts,
       heroes_data: state => state.users.heroes_data,
@@ -133,6 +139,10 @@ export default {
 
     heroCommitedLabel(){
       return `${this.heroCommitedTotal}/${this.heroTotal}`;
+    },
+
+    isDisabled(){
+      return this.heroCount === 0 && this.non_nft_entries_input === 0;
     }
   },
 
@@ -177,6 +187,7 @@ export default {
       this.entering = true;
       this.enterGame().then( () => {
         this.entering = false;
+        this.$store.dispatch('get_game_info');
       });
     },
   }

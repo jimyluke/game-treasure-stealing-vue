@@ -5,6 +5,8 @@ import { resetRouter } from '@/router'
 const getDefaultState = () => {
   return {
     queued: false,
+    game_playing_id: 0,
+    game_id: 0,
     token: getToken(),
     refresh_token: getRefreshToken(),
     wallet: '',
@@ -86,6 +88,14 @@ const mutations = {
 
   SET_CURENT_GAME_INFO: (sate, info) => {
     state.curent_game_info = info;
+  },
+
+  SET_GAME_PLAYING_ID: (state, id) => {
+    state.game_playing_id = id;
+  },
+
+  SET_GAME_ID: (state, id) => {
+    state.game_id = id;
   }
 }
 
@@ -146,6 +156,13 @@ const actions = {
         commit('SET_HEROES_DATA', heroes_data);
         commit('SET_NON_NFT_ENTRIES', data.non_nft_entries);
         commit('SET_CURENT_GAME_INFO', data.current_entries);
+        commit('SET_GAME_PLAYING_ID', data.game_playing_id);
+        commit('SET_GAME_ID', data.game_id);
+
+        if(data.game_playing_id > 0){
+          commit('SET_QUEUED', true);
+        }
+
         resolve(data);
       }).catch(error => {
         reject(error)
