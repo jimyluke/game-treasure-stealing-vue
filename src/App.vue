@@ -44,6 +44,10 @@ export default {
     this.socket.on('gts_connect', function(response) {
       console.log(response)
     });
+    
+    this.socket.on('game_update', function(response) {
+      console.log(response)
+    });
   }
 }
 </script>

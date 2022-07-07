@@ -5,4 +5,6 @@ module.exports = defineConfig({
   devServer: {
     port: 8088, // CHANGE YOUR PORT HERE!
   },
+
+  productionSourceMap: false
 })

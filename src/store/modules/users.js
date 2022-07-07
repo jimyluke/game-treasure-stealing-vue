@@ -4,6 +4,7 @@ import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
+    queued: false,
     token: getToken(),
     refresh_token: getRefreshToken(),
     wallet: '',
@@ -39,6 +40,10 @@ const getters = {
 }
 
 const mutations = {
+  SET_QUEUED: (state, status) => {
+    state.queued = status;
+  },
+
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState())
   },

@@ -36,7 +36,7 @@
             <el-row class="IB-x834" :gutter="20">
               <el-col :span="8">
                 <span class="sp-timer">{{countDown}}</span>
-                <span class="spb-03"><a href="javascript:void(0)" @click="enterGameToday">QUEUE</a></span>
+                <span class="spb-03"><a href="javascript:void(0)" @click="openQueue">QUEUE</a></span>
                 <span>Queued Thieves: {{ queuedThieves }}</span>
               </el-col>
               <el-col :span="8">
@@ -133,6 +133,11 @@ export default {
     ...mapActions({
       enterGame: 'users/enterGame'
     }),
+
+    openQueue(){
+      this.$store.commit('users/SET_QUEUED', true);
+      console.log('OK')
+    },
 
     enterGameToday(){
       if(this.loading)
