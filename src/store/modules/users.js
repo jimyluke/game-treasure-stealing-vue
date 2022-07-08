@@ -159,6 +159,8 @@ const actions = {
         commit('SET_GAME_PLAYING_ID', data.game_playing_id);
         commit('SET_GAME_ID', data.game_id);
 
+        commit('SET_NFTS_LOADING', false, {root: true});
+
         if(data.game_playing_id > 0){
           commit('SET_QUEUED', true);
         }

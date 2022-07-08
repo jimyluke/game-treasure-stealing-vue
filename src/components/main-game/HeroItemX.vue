@@ -1,26 +1,22 @@
 <template>
   <el-popover
     placement="bottom"
-    :title="hero.data.name"
+    :title="hero_name"
     width="260"
     trigger="hover"
     :open-delay="300">
     <div class="hero-expanded-stats">
-      <!-- <el-row v-for="(val, key) in hero.data.customMetaData.attributes" :key="key">
-        <label class="hero-attribute">{{key}}</label><span>{{val}}</span>
-      </el-row> -->
-      <!-- {{hero.data.customMetaData}} -->
       Hero Infomation
     </div>
     <div slot="reference">
-      <label class="hero-name">{{ hero.data.name }}</label>
+      <label class="hero-name">{{ hero_name }}</label>
       <div class="hero-img">
         <el-checkbox v-model="heroStatus" :checked="isChecked" @change="toggleSelectHero"></el-checkbox>
-        <img v-lazy="hero.data.customMetaData.image" />
+        <img v-lazy="hero_img" />
       </div>
       <div class="block">
         <span>Hero Tier: <strong> 
-          <span v-if="hero.data && hero.data.customMetaData.attributes">{{ hero.data.customMetaData.attributes.heroTier }}</span>
+          <span v-if="hero_tier">{{ hero_tier }}</span>
           <span v-else>None</span></strong>
         </span>
       </div>
@@ -32,7 +28,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapState, mapActions} from 'vuex';
+
 export default {
   data(){
     return {
@@ -52,8 +49,24 @@ export default {
       heroes_data: state => state.users.heroes_data
     }),
 
+    meta(){
+      return _.last(this.hero.info.meta);
+    },
+
     token_adress(){
       return this.hero.mint;
+    },
+
+    hero_name(){
+      return this.hero.info.TokenName.token_name;
+    },
+
+    hero_img(){
+      return this.meta.image_url;
+    },
+
+    hero_tier(){
+      return this.hero.info.hero_tier;
     },
 
     isChecked(){
@@ -76,6 +89,6 @@ export default {
         this.$store.dispatch('get_game_info');
       })
     }
-  }
+  },
 }
 </script>

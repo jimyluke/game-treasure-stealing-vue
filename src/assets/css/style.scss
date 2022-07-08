@@ -426,3 +426,22 @@ button.el-button--primary.is-disabled:hover{
   background-color: #595959;
   border-color: #595959;
 }
+
+.inventory-layout{
+  .heroes-wrapper{
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .inventory-hero-item{
+    border-radius: 10px;
+    background-color: #3e241b;
+    padding: 15px;
+    border: 2px solid #a69e4f;
+
+    img{
+      max-width: 100%;
+    }
+  }
+}

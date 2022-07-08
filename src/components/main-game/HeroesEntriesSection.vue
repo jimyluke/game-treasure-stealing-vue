@@ -5,7 +5,27 @@
         <div class="heroes-list col-left">
           <h3>Heroes ({{heroes.length}})</h3>
 
-          <div class="heroes-list-inner">
+          <div class="heroes-list-inner mb-30">
+            <div class="heroes-list-inner">
+              <ul v-if="loading">
+                <li v-for="i in 3" :key="i">
+                  <HeroPlaceHolder :is-loading="true" />
+                </li>
+              </ul>
+              <ul v-else>
+                <li v-for="hero in heroes_data" :key="hero.mint">
+                  <HeroItemX :hero="hero" />
+                </li>
+              </ul>
+              <ul v-if="!loading && heroes.length == 0">
+                <li v-for="i in 3" :key="i">
+                  <HeroPlaceHolder />
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- <div class="heroes-list-inner">
             <ul v-if="loading">
               <li v-for="i in 3" :key="i">
                 <HeroPlaceHolder :is-loading="true" />
@@ -21,7 +41,7 @@
                 <HeroPlaceHolder />
               </li>
             </ul>
-          </div>
+          </div> -->
         </div>
 
         <div class="entries-section col-right">
@@ -74,6 +94,7 @@
 import { mapActions, mapGetters, mapState } from 'vuex';
 import HeroPlaceHolder from './HeroPlaceHolder.vue';
 import HeroItem from './HeroItem.vue';
+import HeroItemX from './HeroItemX.vue';
 
 export default {
   data:() => ({
@@ -85,7 +106,8 @@ export default {
 
   components: {
     HeroPlaceHolder,
-    HeroItem
+    HeroItem,
+    HeroItemX
   },
 
   computed: {
@@ -173,8 +195,8 @@ export default {
       this.non_nft_entries_input = 0;
 
       this.$store.commit('users/SET_NON_NFT_ENTRIES', value);
-      this.updateNonNFTEntries(value).then( res => {
-        //console.log(res)
+      this.updateNonNFTEntries(value).then( () => {
+        this.$store.dispatch('get_game_info');
       }).catch( error => {
         console.log(error)
       })
