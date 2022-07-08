@@ -1,7 +1,7 @@
 <template>
   <div class="inventory-layout">
     <div class="container">
-      <h1>Inventory</h1>
+      <h1>Inventory ({{total}})</h1>
       <div class="heroes-wrapper mb-30">
         <HeroItem v-for="hero in heroes_data" :hero="hero" :key="hero.mint" />
       </div>
@@ -28,6 +28,10 @@ export default {
     ...mapState({
       heroes_data: state => state.users.heroes_data
     }),
+
+    total(){
+      return this.heroes_data.length;
+    }
   }
 }
 </script>
