@@ -13,6 +13,13 @@ class AppRequestAPI {
       method: 'get'
     })
   }
+
+  validAuth(){
+    return request({
+      url: `/app/valid`,
+      method: 'post'
+    })
+  }
 }
 
 const App = new AppRequestAPI()

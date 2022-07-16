@@ -8,6 +8,14 @@ class UserApi {
     })
   }
 
+  connectWallet(data){
+    return request({
+      url: '/auth/connect-wallet',
+      method: 'post',
+      data
+    })
+  }
+
   refreshToken(data) {
     return request({
       url: '/auth/refresh-token',

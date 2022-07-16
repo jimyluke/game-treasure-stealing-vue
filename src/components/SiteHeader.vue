@@ -41,6 +41,7 @@
 <script>
 import copy from 'copy-to-clipboard';
 import { mapActions, mapGetters, mapState } from 'vuex'
+import MainMX from '@/mixins/MainMX';
 
 export default {
   data(){
@@ -49,11 +50,21 @@ export default {
     }
   },
 
+  mixins: [MainMX],
+
   computed: {
     ...mapState({
       wallet: state => state.users.wallet,
       user: state => state.users.user,
     }),
+
+    isPhantom(){
+      return solana?.isPhantom;
+    },
+
+    provider(){
+      return this.getProvider();
+    },
 
     ...mapGetters({
       isLoggedIn: 'users/isLoggedIn'
@@ -74,6 +85,7 @@ export default {
     }),
 
     async logout(){
+      this.disconnectPhantom();
       await this.doLogout();
       this.$router.push(`/connect-wallet?redirect=${this.$route.fullPath}`)
     },
@@ -84,7 +96,12 @@ export default {
         message: 'Wallet address copied.',
         type: 'success'
       });
-    }
+    },
+
+    async disconnectPhantom(){
+      console.log(this.provider)
+      this.provider.disconnect();
+    },
   }
 }
 </script>

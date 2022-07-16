@@ -15,6 +15,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
+    config.headers['x-app-id'] = '123456';
 
     if (store.getters.token) {
       // let each request carry token
@@ -22,7 +23,7 @@ service.interceptors.request.use(
       // please modify it according to the actual situation
       // {'Authorization': `Bearer ${state.token}`}
       // config.headers['Authorization'] = getToken()
-      config.headers['Authorization'] = `Bearer ${getToken()}`
+      config.headers['Authorization'] = `Bearer ${getToken()}`;
     }
     return config
   },

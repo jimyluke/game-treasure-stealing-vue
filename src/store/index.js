@@ -21,7 +21,9 @@ const store = new Vuex.Store({
     nfts: [],
     SolTotal: 0,
     socket: socket,
-    game_info: {}
+    game_info: {},
+    sol_rate: 1,
+    primary_wallet: ''
   },
   getters,
 
@@ -40,6 +42,14 @@ const store = new Vuex.Store({
 
     SET_GAME_INFO: (state, info) => {
       state.game_info = info;
+    },
+
+    SET_SOL_RATE: (state, rate) => {
+      state.sol_rate = rate;
+    },
+
+    SET_PRIMARY_WALLET: (state, wallet_address) => {
+      state.primary_wallet = wallet_address;
     }
   },
 
@@ -48,6 +58,19 @@ const store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         App.getGameInfo().then( res => {
           commit('SET_GAME_INFO', res.game_info);
+          commit('SET_SOL_RATE', res.sol_usd_rate);
+          commit('SET_PRIMARY_WALLET', res.primary_wallet);
+          resolve(res)
+        }).catch( error => {
+          console.log(error)
+          reject(error)
+        })
+      });
+    },
+
+    valid({commit}){
+      return new Promise((resolve, reject) => {
+        App.validAuth().then( res => {
           resolve(res)
         }).catch( error => {
           console.log(error)

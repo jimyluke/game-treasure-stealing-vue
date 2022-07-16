@@ -109,7 +109,23 @@ const actions = {
         commit('SET_REFRESH_TOKEN', data.refresh_token)
         setToken(data.token)
         setRefreshToken(data.refresh_token)
-        resolve()
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  connectWallet({ commit }, info){
+    const { wallet, signature } = info;
+    return new Promise((resolve, reject) => {
+      Users.connectWallet({ wallet: wallet, signature: signature, timestamp: new Date().getTime() }).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.token)
+        commit('SET_REFRESH_TOKEN', data.refresh_token)
+        setToken(data.token)
+        setRefreshToken(data.refresh_token)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })

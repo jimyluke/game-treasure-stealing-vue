@@ -20,7 +20,7 @@ const messages = Object.assign(languages)
 Vue.use(ElementUI);
 Vue.use(VueLazyload);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 var i18n = new VueI18n({
   locale: defaultLocale,
