@@ -10,6 +10,7 @@ const getDefaultState = () => {
     token: getToken(),
     refresh_token: getRefreshToken(),
     wallet: '',
+    wallet_balance: 0,
     user: {},
     non_nft_entries: 0,
     heroes_mint: [],
@@ -64,6 +65,10 @@ const mutations = {
 
   SET_WALLET: (state, wallet) => {
     state.wallet = wallet
+  },
+
+  SET_WALLET_BALANCE: (state, balance) => {
+    state.wallet_balance = balance
   },
 
   SET_AVATAR: (state, avatar) => {
@@ -158,7 +163,7 @@ const actions = {
   },
 
   // get user info
-  getInfo({ state, commit }) {
+  getInfo({ state, commit, dispatch }) {
     return new Promise((resolve, reject) => {
       Users.getInfo().then(response => {
         const { data } = response
@@ -181,6 +186,7 @@ const actions = {
           commit('SET_QUEUED', true);
         }
 
+        dispatch('getBalanceWallet');
         resolve(data);
       }).catch(error => {
         reject(error)
@@ -247,9 +253,26 @@ const actions = {
     });
   },
 
-  enterGame({commit}){
+  enterGame({commit}, signature){
     return new Promise((resolve, reject) => {
-      Users.enterGame({}).then( res => {
+      const data_send = {
+        signature: signature,
+        timestamp: new Date().getTime()
+      }
+      Users.enterGame(data_send).then( res => {
+        resolve(res)
+      }).catch( error => {
+        console.log(error)
+        reject(error)
+      })
+    });
+  },
+
+  getBalanceWallet({commit, state}){
+    return new Promise((resolve, reject) => {
+      const data_send = { wallet_address: state.wallet}
+      Users.getBalanceWallet(data_send).then( res => {
+        commit('SET_WALLET_BALANCE', res.balance);
         resolve(res)
       }).catch( error => {
         console.log(error)

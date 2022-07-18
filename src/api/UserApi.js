@@ -62,6 +62,14 @@ class UserApi {
       data
     })
   }
+
+  getBalanceWallet(data){
+    return request({
+      url: '/user/get-balance-wallet',
+      method: 'post',
+      data
+    })
+  }
 }
 
 const User = new UserApi()

@@ -1,7 +1,8 @@
 <template>
   <div class="connect-wallet-layout">
     <div class="container">
-      <h1 class="align-center">This is an connect wallet page</h1>
+      <h1 class="align-center">Connect your wallet.</h1>
+      <p class="mb-20 align-center">Connect with one of our available wallet providers or create a new one.</p>
       <div class="align-center">
         <!-- <el-button :loading="loading" @click="fakeConnect">Connect</el-button> -->
         <el-button @click="connectPhantom">Connect Phantom</el-button>

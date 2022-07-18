@@ -7,7 +7,7 @@
       </nav>
 
       <div class="user-coin-info right-side" v-if="isLoggedIn">
-        <span>{{ totalSol }} SOL ($5)</span>
+        <span>{{ totalSol }} SOL ({{inDollars | currency}})</span>
         <span>{{ totalLoot }} Loot</span>
 
         <el-popover
@@ -55,7 +55,9 @@ export default {
   computed: {
     ...mapState({
       wallet: state => state.users.wallet,
+      wallet_balance: state => state.users.wallet_balance,
       user: state => state.users.user,
+      sol_rate: state => state.sol_rate
     }),
 
     isPhantom(){
@@ -71,7 +73,11 @@ export default {
     }),
 
     totalSol(){
-      return this.user.sol_balance;
+      return this.wallet_balance;
+    },
+
+    inDollars(){
+      return this.totalSol*this.sol_rate;
     },
 
     totalLoot(){

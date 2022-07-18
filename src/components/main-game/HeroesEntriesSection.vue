@@ -221,13 +221,16 @@ export default {
     },
 
     enterGameToday(){
-      if(this.entering)
-        return false;
-
-      this.entering = true;
       this.enterGame().then( () => {
         this.entering = false;
         this.$store.dispatch('get_game_info');
+        this.$notify({
+          title: 'Success',
+          message: 'This is a success message',
+          type: 'success'
+        });
+      }).catch(error => {
+        this.entering = false;
       });
     },
 
@@ -252,6 +255,7 @@ export default {
     },
 
     async transferSOL() {
+      this.entering = true;
       const amount = this.amount;
       const commitment = 'confirmed';
       // Detecing and storing the phantom wallet of the user (creator in this case)
@@ -300,9 +304,10 @@ export default {
 
         //Signature chhap diya idhar
         console.log("Signature: ", signature);
-        this.enterGameToday();
+        this.enterGameToday(signature);
       }catch(error){
         console.log(error);
+        this.entering = false;
       };
     },
   }

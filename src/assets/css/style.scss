@@ -33,6 +33,11 @@ h1,h2,h3,h4,h5,h6{
   margin-bottom: 20px;
 }
 
+a{
+  text-decoration: none;
+  color: #FFF;
+}
+
 .block{
   display: block;
 }
@@ -105,6 +110,10 @@ span.loot-loose{
   width: 100%;
   overflow: hidden;
   padding: 0 0;
+}
+
+.connect-wallet-layout{
+  min-height: calc(100vh - 114px);
 }
 
 .vs-icon-check span .line1{
