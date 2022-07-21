@@ -5,7 +5,9 @@
       <p class="mb-20 align-center">Connect with one of our available wallet providers or create a new one.</p>
       <div class="align-center">
         <!-- <el-button :loading="loading" @click="fakeConnect">Connect</el-button> -->
-        <el-button @click="connectPhantom">Connect Phantom</el-button>
+        <el-button class="connect-phantom-button" @click="connectPhantom">
+          <img src="@/assets/icons/phantom.svg" height="20" />
+        </el-button>
         <!-- <el-button @click="disconnectPhantom">Disconnect</el-button> -->
         <!-- <el-button @click="transferSOL">Transaction</el-button> -->
       </div>

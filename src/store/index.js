@@ -22,6 +22,7 @@ const store = new Vuex.Store({
     SolTotal: 0,
     socket: socket,
     game_info: {},
+    node_type: 'devnet',
     sol_rate: 1,
     primary_wallet: ''
   },
@@ -50,6 +51,10 @@ const store = new Vuex.Store({
 
     SET_PRIMARY_WALLET: (state, wallet_address) => {
       state.primary_wallet = wallet_address;
+    },
+
+    SET_NODE_TYPE: (state, type) => {
+      state.node_type = type;
     }
   },
 
@@ -60,6 +65,7 @@ const store = new Vuex.Store({
           commit('SET_GAME_INFO', res.game_info);
           commit('SET_SOL_RATE', res.sol_usd_rate);
           commit('SET_PRIMARY_WALLET', res.primary_wallet);
+          commit('SET_NODE_TYPE', res.node_type);
           resolve(res)
         }).catch( error => {
           console.log(error)

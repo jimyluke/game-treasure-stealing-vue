@@ -253,13 +253,14 @@ const actions = {
     });
   },
 
-  enterGame({commit}, signature){
+  enterGame({commit, dispatch}, signature){
     return new Promise((resolve, reject) => {
       const data_send = {
         signature: signature,
         timestamp: new Date().getTime()
       }
       Users.enterGame(data_send).then( res => {
+        dispatch('getBalanceWallet');
         resolve(res)
       }).catch( error => {
         console.log(error)

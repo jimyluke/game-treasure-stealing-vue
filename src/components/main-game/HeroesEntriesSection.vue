@@ -124,6 +124,7 @@ export default {
       non_nft_entries: state => state.users.non_nft_entries,
       curent_game_info: state => state.users.curent_game_info,
       solRate: state => state.sol_rate,
+      node_type: state => state.node_type,
       primaryWallet: state => state.primary_wallet
     }),
 
@@ -220,8 +221,8 @@ export default {
       })
     },
 
-    enterGameToday(){
-      this.enterGame().then( () => {
+    enterGameToday(signature){
+      this.enterGame(signature).then( () => {
         this.entering = false;
         this.$store.dispatch('get_game_info');
         this.$notify({
@@ -263,7 +264,7 @@ export default {
       console.log("Public key of the emitter: ", provider.publicKey.toString());
 
       // Establishing connection
-      const connection = new Connection(clusterApiUrl('testnet'), commitment)
+      const connection = new Connection(clusterApiUrl(this.node_type), commitment)
 
       // Airdrop some SOL to the sender's wallet, so that it can handle the txn fee
       // var airdropSignature = await connection.requestAirdrop(
