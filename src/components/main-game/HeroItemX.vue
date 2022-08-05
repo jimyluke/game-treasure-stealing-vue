@@ -11,7 +11,7 @@
     <div slot="reference">
       <label class="hero-name">{{ hero_name }}</label>
       <div class="hero-img">
-        <el-checkbox v-model="heroStatus" :checked="isChecked" @change="toggleSelectHero"></el-checkbox>
+        <el-checkbox v-model="heroStatus" :checked="isChecked" @change="toggleSelectHero" :disabled="isReadonly"></el-checkbox>
         <img v-lazy="hero_img" />
       </div>
       <div class="block">
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { indexOf } from 'lodash';
 import {mapState, mapActions} from 'vuex';
 
 export default {
@@ -46,7 +47,8 @@ export default {
 
   computed: {
     ...mapState({
-      heroes_data: state => state.users.heroes_data
+      heroes_data: state => state.users.heroes_data,
+      submitted: state => state.users.submitted,
     }),
 
     meta(){
@@ -75,6 +77,21 @@ export default {
         return h.mint === self.hero.mint && h.active === 1;
       })
       return find.length > 0? true: false;
+    },
+
+    lastSubmitted(){
+      return _.last(this.submitted);
+    },
+
+    submitted_tokens(){
+      if(this.lastSubmitted){
+        return this.lastSubmitted.tokens;
+      }
+      return [];
+    },
+
+    isReadonly(){
+      return this.submitted_tokens.indexOf(this.hero.mint) > -1? true: false;
     }
   },
 

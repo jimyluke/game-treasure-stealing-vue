@@ -39,7 +39,7 @@ export default {
   },
 
   mounted(){
-    this.$store.dispatch('get_nfts');
+    //this.$store.dispatch('get_nfts');
     //console.log(this.socket)
     this.socket.on('gts_connect', function(response) {
       console.log(response)

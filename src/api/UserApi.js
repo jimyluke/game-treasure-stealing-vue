@@ -26,7 +26,7 @@ class UserApi {
   
   getInfo(params) {
     return request({
-      url: '/auth/info',
+      url: '/auth/info?t=u',
       method: 'get',
       params: params
     })

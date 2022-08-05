@@ -49,7 +49,8 @@ export default {
 
   computed: {
     ...mapState({
-      heroes_data: state => state.users.heroes_data
+      heroes_data: state => state.users.heroes_data,
+      submitted: state => state.users.submitted,
     }),
 
     token_adress(){
@@ -62,6 +63,17 @@ export default {
         return h.mint === self.hero.mint && h.active === 1;
       })
       return find.length > 0? true: false;
+    },
+
+    lastSubmitted(){
+      return _.last(this.submitted);
+    },
+
+    submitted_tokens(){
+      if(this.lastSubmitted){
+        return this.lastSubmitted.tokens;
+      }
+      return [];
     }
   },
 
@@ -73,7 +85,7 @@ export default {
     toggleSelectHero(){
       const hero = this.hero;
       this.toggleSelectHeroAction({hero_mint: hero.mint}).then( () => {
-        this.$store.dispatch('get_game_info');
+        //this.$store.dispatch('get_game_info');
       })
     }
   }

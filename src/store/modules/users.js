@@ -15,7 +15,8 @@ const getDefaultState = () => {
     non_nft_entries: 0,
     heroes_mint: [],
     heroes_data: [],
-    curent_game_info: {}
+    curent_game_info: {},
+    submitted: []
   }
 }
 
@@ -101,6 +102,10 @@ const mutations = {
 
   SET_GAME_ID: (state, id) => {
     state.game_id = id;
+  },
+
+  SET_SUBMITTED: (state, submitted) => {
+    state.submitted = submitted;
   }
 }
 
@@ -176,11 +181,12 @@ const actions = {
         commit('SET_HEROES_MINT', heroes);
         commit('SET_HEROES_DATA', heroes_data);
         commit('SET_NON_NFT_ENTRIES', data.non_nft_entries);
+        commit('SET_SUBMITTED', data.submitted);
         commit('SET_CURENT_GAME_INFO', data.current_entries);
         commit('SET_GAME_PLAYING_ID', data.game_playing_id);
         commit('SET_GAME_ID', data.game_id);
 
-        commit('SET_NFTS_LOADING', false, {root: true});
+        //commit('SET_NFTS_LOADING', false, {root: true});
 
         if(data.game_playing_id > 0){
           commit('SET_QUEUED', true);
@@ -232,7 +238,7 @@ const actions = {
           update_heroes_data.push(_h);
         });
         commit('SET_HEROES_DATA', update_heroes_data);
-        commit('SET_CURENT_GAME_INFO', res.game_info);
+        commit('SET_CURENT_GAME_INFO', res.user_game_info);
 
         resolve(res)
       }).catch(error => {
@@ -244,7 +250,7 @@ const actions = {
   updateNonNFTEntries({commit}, entries_total){
     return new Promise((resolve, reject) => {
       Users.updateNonNFTEntries({entries: entries_total}).then( res => {
-        commit('SET_CURENT_GAME_INFO', res.game_info);
+        commit('SET_CURENT_GAME_INFO', res.user_game_info);
         resolve(res)
       }).catch( error => {
         console.log(error)
@@ -260,6 +266,8 @@ const actions = {
         timestamp: new Date().getTime()
       }
       Users.enterGame(data_send).then( res => {
+        commit('SET_CURENT_GAME_INFO', res.user_game_info);
+        commit('SET_SUBMITTED', res.submitted);
         dispatch('getBalanceWallet');
         resolve(res)
       }).catch( error => {

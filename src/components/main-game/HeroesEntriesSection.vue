@@ -17,11 +17,11 @@
                   <HeroItemX :hero="hero" />
                 </li>
               </ul>
-              <ul v-if="!loading && heroes.length == 0">
+              <!-- <ul v-if="!loading && heroes.length == 0">
                 <li v-for="i in 3" :key="i">
                   <HeroPlaceHolder />
                 </li>
-              </ul>
+              </ul> -->
             </div>
           </div>
 
@@ -64,7 +64,7 @@
                 controls-position="right" 
                 size="small" 
                 @change="handleNonNftEntries"
-                :min="0">
+                :min="minNonEntriesNFT">
               </el-input-number>
             </div>
             <div class="sm-row">
@@ -116,6 +116,7 @@ export default {
 
   computed: {
     ...mapState({
+      wallet_balance: state => state.users.wallet_balance,
       queued: state => state.users.queued,
       game_playing_id: state => state.users.game_playing_id,
       loading: state => state.nfts_loading,
@@ -123,6 +124,7 @@ export default {
       heroes_data: state => state.users.heroes_data,
       non_nft_entries: state => state.users.non_nft_entries,
       curent_game_info: state => state.users.curent_game_info,
+      submitted: state => state.users.submitted,
       solRate: state => state.sol_rate,
       node_type: state => state.node_type,
       primaryWallet: state => state.primary_wallet
@@ -132,6 +134,10 @@ export default {
       heroes: 'users/heroes',
       heroCommitedTotal: 'users/heroCommitedTotal',
     }),
+
+    totalSol(){
+      return this.wallet_balance;
+    },
 
     provider(){
       return this.getProvider();
@@ -171,18 +177,35 @@ export default {
     },
 
     heroCommitedLabel(){
-      return `${this.heroCommitedTotal}/${this.heroTotal}`;
-    },
-
-    isDisabled(){
-      return this.heroCount === 0 && this.non_nft_entries_input === 0;
+      //return `${this.heroCommitedTotal}/${this.heroTotal}`;
+      return this.lastSubmitted? this.lastSubmitted.entry_total: 0;
     },
 
     amount(){
       let amount = 1/this.solRate*parseFloat(this.totalSpent);
       amount = amount.toFixed(2);
       return amount;
-    }
+    },
+
+    lastSubmitted(){
+      return _.last(this.submitted);
+    },
+
+    minNonEntriesNFT(){
+      let min = 0;
+      if(this.lastSubmitted){
+        min = this.lastSubmitted.entry_total;
+      }
+      min = min - this.heroCommitedTotal;
+      return min < 0? 0: min;
+    },
+
+    isDisabled(){
+      if(this.lastSubmitted && this.lastSubmitted.entry_total >= this.totalEntries){
+        return true;
+      }
+      return this.heroCount === 0 && this.non_nft_entries_input === 0;
+    },
   },
 
   watch: {
@@ -215,7 +238,7 @@ export default {
 
       this.$store.commit('users/SET_NON_NFT_ENTRIES', value);
       this.updateNonNFTEntries(value).then( () => {
-        this.$store.dispatch('get_game_info');
+        //this.$store.dispatch('get_game_info');
       }).catch( error => {
         console.log(error)
       })
@@ -227,7 +250,7 @@ export default {
         this.$store.dispatch('get_game_info');
         this.$notify({
           title: 'Success',
-          message: 'This is a success message',
+          message: 'The transaction has been completed successfully.',
           type: 'success'
         });
       }).catch(error => {
@@ -256,9 +279,20 @@ export default {
     },
 
     async transferSOL() {
-      this.entering = true;
       const amount = this.amount;
       const commitment = 'confirmed';
+
+      if(this.totalSol < amount){
+        this.$message({
+          message: 'You do not have enough balance to make the transaction.',
+          type: 'warning'
+        });
+        return;
+      }
+
+      // Start
+      this.entering = true;
+
       // Detecing and storing the phantom wallet of the user (creator in this case)
       var provider = this.provider;
       console.log("Public key of the emitter: ", provider.publicKey.toString());
