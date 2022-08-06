@@ -3,7 +3,7 @@
     <div class="container">
       <div class="section-wrapper">
         <div class="heroes-list col-left">
-          <h3>Heroes ({{heroes.length}})</h3>
+          <h3>Heroes ({{ heroes_data.length }})</h3>
 
           <div class="heroes-list-inner mb-30">
             <div class="heroes-list-inner">

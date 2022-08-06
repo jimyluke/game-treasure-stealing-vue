@@ -52,6 +52,8 @@ export default {
     }),
 
     meta(){
+      if(this.hero.info === undefined)
+        return {};
       return _.last(this.hero.info.meta);
     },
 
@@ -60,6 +62,9 @@ export default {
     },
 
     hero_name(){
+      if(this.hero.info === undefined){
+        return 'Unknown';
+      }
       return this.hero.info.TokenName.token_name;
     },
 
@@ -68,6 +73,8 @@ export default {
     },
 
     hero_tier(){
+      if(this.hero.info === undefined)
+        return '';
       return this.hero.info.hero_tier;
     },
 
