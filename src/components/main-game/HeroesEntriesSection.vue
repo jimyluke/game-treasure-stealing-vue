@@ -164,6 +164,12 @@ export default {
     },
 
     totalSpentExtra(){
+      if(this.curent_game_info === undefined)
+        return 0;
+
+      if(this.lastSubmitted === undefined)
+        return 0;
+
       return this.curent_game_info.TotalSpent - this.lastSubmitted.TotalSpent;
     },
 
