@@ -74,6 +74,9 @@
               <label class="label-x">Total Entries:</label> {{ curent_game_info.entry_total }} <br />
               <label class="label-x">Total Cost:</label> <strong class="money">{{ curent_game_info.TotalSpent | currency }} <i class="amout-sol">({{amount}} Sol)</i></strong>
             </div>
+            <div class="sm-row" v-if="totalSpentExtra>0">
+              <label class="label-x">Total extra:</label> <strong class="money-unpaid">{{ totalSpentExtra | currency }} <i class="amout-sol">({{ amountExtra }} Sol)</i></strong>
+            </div>
 
             <div class="sm-row last">
               <el-button 
@@ -160,6 +163,10 @@ export default {
       return this.curent_game_info.TotalSpent;
     },
 
+    totalSpentExtra(){
+      return this.curent_game_info.TotalSpent - this.lastSubmitted.TotalSpent;
+    },
+
     costPerHeroOrigin(){
       if(this.heroCount === 0)
         return 0;
@@ -183,6 +190,12 @@ export default {
 
     amount(){
       let amount = 1/this.solRate*parseFloat(this.totalSpent);
+      amount = amount.toFixed(4);
+      return amount;
+    },
+
+    amountExtra(){
+      let amount = 1/this.solRate*parseFloat(this.totalSpentExtra);
       amount = amount.toFixed(4);
       return amount;
     },
@@ -279,7 +292,12 @@ export default {
     },
 
     async transferSOL() {
-      const amount = this.amount;
+      let amount = this.amount;
+
+      if(this.submitted.length > 0){
+        amount = this.amountExtra;
+      }
+
       const commitment = 'confirmed';
 
       if(this.totalSol < amount){
@@ -309,7 +327,6 @@ export default {
       // // Confirming that the airdrop went through
       // await connection.confirmTransaction(airdropSignature);
       // console.log("Airdropped");
-      console.log(amount*LAMPORTS_PER_SOL)
 
       try{
         var transaction = new Transaction().add(
