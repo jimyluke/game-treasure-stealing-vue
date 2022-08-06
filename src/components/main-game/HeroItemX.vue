@@ -11,7 +11,7 @@
     <div slot="reference">
       <label class="hero-name">{{ hero_name }}</label>
       <div class="hero-img">
-        <el-checkbox v-model="heroStatus" :checked="isChecked" @change="toggleSelectHero" :disabled="isReadonly"></el-checkbox>
+        <el-checkbox v-model="heroStatus" :checked="isChecked" @change="toggleSelectHero" :disabled="isDisabled"></el-checkbox>
         <img v-lazy="hero_img" />
       </div>
       <div class="block">
@@ -90,7 +90,7 @@ export default {
       return [];
     },
 
-    isReadonly(){
+    isDisabled(){
       return this.submitted_tokens.indexOf(this.hero.mint) > -1? true: false;
     }
   },

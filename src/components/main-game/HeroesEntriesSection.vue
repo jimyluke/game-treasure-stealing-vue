@@ -183,7 +183,7 @@ export default {
 
     amount(){
       let amount = 1/this.solRate*parseFloat(this.totalSpent);
-      amount = amount.toFixed(2);
+      amount = amount.toFixed(4);
       return amount;
     },
 
@@ -309,13 +309,14 @@ export default {
       // // Confirming that the airdrop went through
       // await connection.confirmTransaction(airdropSignature);
       // console.log("Airdropped");
+      console.log(amount*LAMPORTS_PER_SOL)
 
       try{
         var transaction = new Transaction().add(
           SystemProgram.transfer({
             fromPubkey: provider.publicKey,
             toPubkey: new PublicKey(this.primaryWallet),
-            lamports: (amount*LAMPORTS_PER_SOL) //Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
+            lamports: parseInt(amount*LAMPORTS_PER_SOL) //Investing 1 SOL. Remember 1 Lamport = 10^-9 SOL.
           }),
         );
         
@@ -343,6 +344,10 @@ export default {
       }catch(error){
         console.log(error);
         this.entering = false;
+        this.$message({
+          message: error.message,
+          type: 'warning'
+        });
       };
     },
   }
