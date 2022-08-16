@@ -1,10 +1,65 @@
 <template>
-  <div class="header-section">
-    <div class="container">
+  <div class="header">
+    <div class="container-head">
       <nav class="main-menu left-side">
-        <router-link to="/">Home</router-link>
-        <router-link to="/inventory">Inventory</router-link>
+        <a class="header-logo" title="Crypto Quest - Home Page" href="https://cryptoquestnft.com">
+          <img class="header-logo__back" src="../assets/images/header/Ribbon.svg"/>
+          <img class="header-logo__front" src="../assets/images/header/CQ big.png"/>
+        </a>
       </nav>
+
+     <nav class="nav ripped-right">
+      <div class="nav__container">
+        <ul class="nav__menu">
+          <p class="hidden-desktop">
+            <a href="https://cryptoquestnft.com">Home</a>
+          </p>
+          <p>
+            <a href="https://cryptoquestnft.com/nfts">Nfts</a>
+          </p>
+          <p>
+            <a href="https://cryptoquestnft.com/inventory">Inventory</a>
+          </p>
+          <p>
+            <a href="https://cryptoquestnft.com/mobile">Mobile</a>
+          </p>
+          <p>
+            <a href="https://cryptoquestnft.com/podcast">Podcast</a>
+          </p>
+          <p>
+            <a
+              href="https://docs.cryptoquestnft.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Whitepaper
+            </a>
+          </p>
+          <p>
+            <a href="https://cryptoquestnft.com/">Terms</a>
+          </p>
+        </ul>
+
+        <ul class="header__icons header__icons--mobile justify-content-center icon-group mt-6 hidden-desktop">
+          <p class="d-flex">
+            <button
+              class="border-none bg-transparent"
+            >
+            </button>
+
+
+          </p>
+          <p class="d-flex">
+            <a
+              href="https://twitter.com/CryptoQuest_NFT"
+              target="_blank"
+              rel="noreferrer"
+            >
+            </a>
+          </p>
+        </ul>
+      </div>
+    </nav>
 
       <div class="user-coin-info right-side" v-if="isLoggedIn">
         <span>{{ totalSol }} SOL ({{inDollars | currency}})</span>
@@ -24,18 +79,24 @@
             <strong>{{ totalSol }} SOL</strong>
           </div>
           <div class="p-row">
-            <el-button @click="logout">Disconnect</el-button>
+            <el-button class="wallet-button" @click="logout">Disconnect</el-button>
           </div>
 
           <el-button type="text" slot="reference" icon="el-icon-user-solid">My Account</el-button>
         </el-popover>
       </div>
 
-      <div class="user-coin-info right-side" v-else>
-        <router-link to="/connect-wallet">Connect Wallet</router-link>
+      <div class="right-side" v-else>
+        <router-link to="/connect-wallet">
+        <button class="wallet-button">
+        
+        <span>Connect Wallet</span>
+        </button>
+        </router-link>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -46,7 +107,6 @@ import MainMX from '@/mixins/MainMX';
 export default {
   data(){
     return {
-
     }
   },
 

@@ -53,4 +53,16 @@ export default {
 </script>
 
 <style>
+
+@font-face {
+  font-family: "Hand-Scribble";
+  src: local("Hand-Scribble"),   url(./fonts/Hand-Scribble-Sketch-Times.otf) format("opentype");}
+@font-face {
+  font-family: "Ringbearer";
+  src: local("Ringbearer"),   url(./fonts/Ringbearer\ Medium.ttf) format("truetype");}
+@font-face {
+  font-family: "Belmont";
+  src: local("Belmont"),   url(./fonts/Belmont\ Regular.otf) format("opentype");}
+
+
 </style>

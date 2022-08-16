@@ -1,13 +1,16 @@
 <template>
+<div class="base">
   <div class="main-game-section">
+
     <div class="container">
       <div class="monster-section">
+
         <el-row class="monster-section-info">
-          <el-col :span="8">
-            <span class="block sh2"></span>
+          <el-col class="align-left" :span="8">
+          
           </el-col>
           <el-col :span="8" class="align-center">
-            <span class="block sh2 bb-label">Bonenosher's Bounty</span>
+            <div class="bone-image"> <img src="@/assets/images/logo.png" /></div>
             <span class="block sh2 money-2">{{ bonenosherBountyTotal | currency }} 
               <el-tooltip effect="dark" content="Main Pot" placement="bottom">
                 <i class="el-icon-info"></i>
@@ -20,14 +23,14 @@
             </span>
           </el-col>
           <el-col class="align-right thieves-guide" :span="8">
-            <span class="block">Thieves Guild Standing</span>
+            <span class="block tg-label">Thieves Guild Standing</span>
             <span class="block thieves-guide-standing"><span>{{ thievesGuideStandingActive }}</span>/{{ thievesGuideStandingTotal }}</span>
           </el-col>
         </el-row>
 
         <div class="align-center">
-          <div class="bonensoher">
-            <img src="@/assets/images/bonensoher.png" />
+          <div class="bonenosher">
+            <img src="@/assets/images/bonenosher.gif" />
           </div>
         </div>
 
@@ -40,7 +43,7 @@
                 <span>Queued Thieves: {{ queuedThieves }}</span>
               </el-col>
               <el-col :span="8">
-                <a href="javascript:void(0)" @click="openChest">
+                <a href="javascript:void(0)" @click="openChest" @mouseover="animateChestHovered" @mouseout="animateChestUnhovered">
                   <span class="chest-icon closed-status"></span>
                   <span>Reveal Rewards</span>
                 </a>
@@ -59,6 +62,7 @@
         </div> -->
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -152,6 +156,17 @@ export default {
 
     openChest(){
       console.log('Open Chest')
+    },
+
+    animateChestHovered(event){
+      event.target.classList.toggle('animate__animated')
+      event.target.classList.toggle('animate__tada')
+      console.log('Chest Hovered')
+    },
+
+    animateChestUnhovered(event){
+      event.target.classList.toggle('animate__animated')
+      event.target.classList.toggle('animate__tada')
     },
 
     watchResult(){
