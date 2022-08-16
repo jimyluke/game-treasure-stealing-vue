@@ -8,6 +8,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueLazyload from 'vue-lazyload';
 import '@/permission' // permission control
+import 'animate.css';
+
 
 Vue.use(VueI18n)
 Vue.use(Vuex)
