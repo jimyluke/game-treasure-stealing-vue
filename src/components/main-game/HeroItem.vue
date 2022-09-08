@@ -6,11 +6,15 @@
     trigger="hover"
     :open-delay="300">
     <div class="hero-expanded-stats">
-      <!-- <el-row v-for="(val, key) in hero.data.customMetaData.attributes" :key="key">
-        <label class="hero-attribute">{{key}}</label><span>{{val}}</span>
-      </el-row> -->
-      <!-- {{hero.data.customMetaData}} -->
-      Hero Infomation
+      <div>
+        <label>Times Queued</label>: <span>{{ times_queued }}</span>
+      </div>
+      <div>
+        <label>Times Won</label>: <span>{{ times_won }}</span>
+      </div>
+      <div>
+        <label>SOL Earned</label>: <span>{{ SOL_Earned }}</span>
+      </div>
     </div>
     <div slot="reference">
       <label class="hero-name">{{ hero.data.name }}</label>
@@ -74,6 +78,18 @@ export default {
         return this.lastSubmitted.tokens;
       }
       return [];
+    },
+
+    times_queued(){
+      return 0;
+    },
+
+    times_won(){
+      return 1;
+    },
+
+    SOL_Earned(){
+      return 2;
     }
   },
 

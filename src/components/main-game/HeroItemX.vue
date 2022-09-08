@@ -6,7 +6,15 @@
     trigger="hover"
     :open-delay="300">
     <div class="hero-expanded-stats">
-      Hero Infomation
+      <div>
+        <label>Times Queued</label>: <span>{{ times_queued }}</span>
+      </div>
+      <div>
+        <label>Times Won</label>: <span>{{ times_won }}</span>
+      </div>
+      <div>
+        <label>SOL Earned</label>: <span>{{ SOL_Earned }}</span>
+      </div>
     </div>
     <div slot="reference">
       <label class="hero-name">{{ hero_name }}</label>
@@ -99,6 +107,22 @@ export default {
 
     isDisabled(){
       return this.submitted_tokens.indexOf(this.hero.mint) > -1? true: false;
+    },
+
+    extra_info(){
+      return this.hero.extra_data || { times_queued: 0, times_won: 0, sol_earned: 0 };
+    },
+
+    times_queued(){
+      return this.extra_info.times_queued;
+    },
+
+    times_won(){
+      return this.extra_info.times_won;
+    },
+
+    SOL_Earned(){
+      return this.extra_info.sol_earned;
     }
   },
 
